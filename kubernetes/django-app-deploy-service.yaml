@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata: 
+  name: dj-deployment
+  labels:
+    app: django
+  annotations:
+    configmap.reloader.stakater.com/reload: "dj-config"
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      project: django_k8s
+  template:
+    metadata:
+      labels:
+        project: django_k8s
+    spec:
+      containers:
+      - name: dj-web
+        image: django_app:0.0.1
+        envFrom:  
+          - configMapRef:
+              name: dj-config
+        ports:
+        - containerPort: 80
+
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: dj-service
+  labels:
+    env: prod
+    owner: EvgenyMelnikov
+spec:
+  selector:
+    project: django_k8s
+  ports: 
+    - name: app-listener
+      protocol: TCP
+      port: 80
+      targetPort: 80
+  type: LoadBalancer
