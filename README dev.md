@@ -64,13 +64,14 @@ kubectl cluster-info
 CoreDNS is running at https://192.168.59.101:8443/api/v1/namespaces/kube-system/services/kube-dns:dns/proxy
 To further debug and diagnose cluster problems, use 'kubectl cluster-info dump'.`
 
-2. Соберите образ с приложением `django`  
-Перейдите в папку проекта^
+2. Создайте образ приложения.
+Соберите образ с приложением `django`    
+Перейдите в папку проекта  
 ```sh
 cd 'ваш путь до папки проекта'\k8s-test-django\
 ```
 ```sh
-minikube image build ./backend_main_django/ -t django_app:0.0.1
+docker image build ./backend_main_django/ -t django_app:0.0.1
 ```
 Если возникла ошибка "Unable to resolve the current Docker CLI context "default": context "default": context not found", выполните команду:
 ```sh
@@ -78,9 +79,17 @@ docker context use default
 ```
 Проверить результат:
 ```sh
-minikube image ls
+docker image ls
 ```
 `-> ... docker.io/library/django_app:0.0.1 ...`
+
+Выложите образ в [dockerhub](https://hub.docker.com/)
+```sh
+docker push melei/django_app:0.0.1
+``` 
+Запишите ссылку на образ в файле django-app-deploy-service.yaml    
+Например:  
+`image: melei/django_app:0.0.1`
 
 3. Установите [Helm](https://helm.sh/)
 

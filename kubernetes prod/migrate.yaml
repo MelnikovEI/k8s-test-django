@@ -1,0 +1,20 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: django-migrate
+  labels:
+    app: django
+  annotations:
+    configmap.reloader.stakater.com/reload: "dj-config"
+spec:
+  template:
+    spec:
+      containers:
+      - name: django-migrate
+        image: melei/django_app:0.0.1
+        imagePullPolicy: IfNotPresent
+        command: ["python", "manage.py", "migrate", "--noinput"]
+        envFrom:
+          - configMapRef:
+              name: dj-config
+      restartPolicy: Never

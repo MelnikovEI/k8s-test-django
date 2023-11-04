@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
       - name: dj-web
-        image: django_app:0.0.1
+        image: melei/django_app
         envFrom:  
           - configMapRef:
               name: dj-config
