@@ -1,6 +1,7 @@
 # Django site
 
-Докеризированный сайт на Django для экспериментов с Kubernetes.
+[Докеризированный сайт на Django для экспериментов с Kubernetes](https://edu-sleepy-engelbart.sirius-k8s.dvmn.org/)  
+[Описание выделенных ресурсов облачной инфраструктуры](https://sirius-env-registry.website.yandexcloud.net/edu-sleepy-engelbart.html)
 
 Внутри конейнера Django запускается с помощью Nginx Unit, не путать с Nginx. Сервер Nginx Unit выполняет сразу две функции: как веб-сервер он раздаёт файлы статики и медиа, а в роли сервера-приложений он запускает Python и Django. Таким образом Nginx Unit заменяет собой связку из двух сервисов Nginx и Gunicorn/uWSGI. [Подробнее про Nginx Unit](https://unit.nginx.org/).
 
@@ -95,6 +96,6 @@ kubectl apply -f .\kubernetes\django-clearsessions.yaml
 Проверить:
 ```kubectl get cronjob```
 
-### 7. Как выкатить на prod свежую версию сайта?
-Создать и залить новую версию образа, см. п.2 `django_app:x.x.x`  
-Применить п.4, 5.
+## Как выкатить на prod свежую версию сайта?
+Создайте и залейте новую версию образа, см. п.2 `django_app:x.x.x`  
+Выполните п.4, 5, 6.
